@@ -1,0 +1,37 @@
+.header-content {
+    background: #1caff6; 
+    height: 60px;
+    width: 100%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding-right: 30px; 
+    padding-left: 30px;
+}
+
+.text-titles {
+    background: #1caff6; 
+    height: 60px; 
+    width: 50%;
+    min-width: 380px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-h-header {
+    margin: 0px; 
+    color: white;
+}
+
+.icon-header { 
+    font-size: 22px;
+    color: white
+}
+
+.icon-header:hover {
+    font-size: 25px;
+    background-color: #99cee9;
+    padding: 5px;
+    border-radius: 3px;
+}

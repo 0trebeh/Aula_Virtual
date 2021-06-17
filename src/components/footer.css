@@ -1,0 +1,25 @@
+.footer-content { 
+    height: 44px; 
+    background: #ddd; 
+    text-align: center; 
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+}
+
+.text-footer {
+    margin: 0px;
+    color: #777;
+}
+
+.icon-footer { 
+    font-size: 22px; 
+    color: #666;
+    padding: 4px;
+}
+
+.icon-footer:hover {
+    color: #000;
+    background: #aeaeae; 
+    border-radius: 3px;
+}
