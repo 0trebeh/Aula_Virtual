@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Home = () => {
+const Ratings = () => {
     
     return (
         <h1>
-          Home
+          Ratings
         </h1>
     );
 }
 
-export default Home;
+export default Ratings;

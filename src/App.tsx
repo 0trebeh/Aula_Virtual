@@ -7,7 +7,25 @@ import {
 import 'antd/dist/antd.css';
 //import axios from 'axios';
 
-import Home from "./pages/home/home"
+import LandingPage from "./pages/landingPage/landingPage";
+import Home from "./pages/home/home";
+import Theory from "./pages/theory/theory";
+import Laboratory from './pages/laboratory/laboratory';
+import Task from './pages/task/task';
+import Ratings from './pages/ratings/ratings';
+import Profile from './pages/profile/profile';
+import Evolution from './pages/evolution/evolution';
+import Delivers from './pages/delivers/delivers';
+import Challenge from './pages/challenge/challenge';
+import C1 from './pages/challenge/c1';
+import C2 from './pages/challenge/c2';
+import C3 from './pages/challenge/c3';
+import C4 from './pages/challenge/c4';
+import C5 from './pages/challenge/c5';
+import C6 from './pages/challenge/c6';
+import C7 from './pages/challenge/c7';
+import C8 from './pages/challenge/c8';
+
 
 //axios.defaults.baseURL = '';
 
@@ -27,8 +45,24 @@ function App() {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={Home} />
-          
+          <Route exact path='/' component={LandingPage} />
+          <Route exact path='/home' component={Home} />
+          <Route exact path='/theory' component={Theory} />
+          <Route exact path='/laboratory' component={Laboratory} />
+          <Route exact path='/task' component={Task} />
+          <Route exact path='/ratings' component={Ratings} />
+          <Route exact path='/profile' component={Profile} />
+          <Route exact path='/evolution' component={Evolution} />
+          <Route exact path='/delivers' component={Delivers} />
+          <Route exact path='/challenge' component={Challenge} />
+          <Route exact path='/challenge/c1' component={C1} />
+          <Route exact path='/challenge/c2' component={C2} />
+          <Route exact path='/challenge/c3' component={C3} />
+          <Route exact path='/challenge/c4' component={C4} />
+          <Route exact path='/challenge/c5' component={C5} />
+          <Route exact path='/challenge/c6' component={C6} />
+          <Route exact path='/challenge/c7' component={C7} />
+          <Route exact path='/challenge/c8' component={C8} />
         </Switch>
       </Router>
     );

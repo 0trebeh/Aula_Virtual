@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Home = () => {
+const C6 = () => {
     
     return (
         <h1>
-          Home
+          challenge 6
         </h1>
     );
 }
 
-export default Home;
+export default C6;

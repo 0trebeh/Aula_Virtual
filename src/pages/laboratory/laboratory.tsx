@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Home = () => {
+const Laboratory = () => {
     
     return (
         <h1>
-          Home
+          Laboratory
         </h1>
     );
 }
 
-export default Home;
+export default Laboratory;

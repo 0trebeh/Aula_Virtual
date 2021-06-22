@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Home = () => {
+const Task = () => {
     
     return (
         <h1>
-          Home
+          Task
         </h1>
     );
 }
 
-export default Home;
+export default Task;

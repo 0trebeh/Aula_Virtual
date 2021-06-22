@@ -1,0 +1,62 @@
+.home-content {
+    height: calc(100vh - 104px); 
+    padding: 40px;
+    padding-top: 20px;
+    text-align: center;
+    min-width: 610px;
+}
+
+.home-body { 
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+}
+
+.robot-home { 
+    width: 542px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.card-body {
+    width: 280px;
+}
+
+.card-bodyStyle {
+    width: 90%;
+    border-radius: 2px;
+    margin-top: 10px;
+    transition: all .5s;
+}
+
+.card-bodyStyle:hover {
+    width: 100%;
+    cursor: pointer;
+}
+
+.card-login {
+    background-color: #f5222d;
+}
+
+.card-login:active {
+    background-color: #96030b;
+}
+
+.card-register {
+    background-color: #ff9400;
+}
+
+.card-register:active {
+    background-color: #af6600;
+}
+
+.text-botton {
+    color: white; 
+    margin: 0px;
+}
+
+.icon-botton { 
+    font-size: 35px; 
+    color: #fff 
+}
