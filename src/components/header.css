@@ -29,6 +29,10 @@
     color: white
 }
 
+.icon-margin {
+    margin-right: 15px;
+}
+
 .icon-header:hover {
     font-size: 25px;
     background-color: #99cee9;

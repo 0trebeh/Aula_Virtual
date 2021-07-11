@@ -1,14 +1,20 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 
-import { RobotOutlined } from '@ant-design/icons';
+import { RobotOutlined, HomeOutlined } from '@ant-design/icons';
 
 import "./header.css"
 
 type Props = {
     text_Subtitle: string;
+    active_iconPerfil: Boolean;
+    active_iconHome: Boolean; 
 };
 
 function Header(props: Props) { 
+
+    const history = useHistory();
+
     var text_Title: string = "Circuitos Logicos";
 
     return (
@@ -18,7 +24,24 @@ function Header(props: Props) {
                 <h2 className="text-h-header">|</h2>
                 <h3 className="text-h-header">{props.text_Subtitle}</h3> 
             </div>
-            <RobotOutlined className="icon-header"/> 
+            <div>
+            {   props.active_iconHome ?
+                <HomeOutlined 
+                    className="icon-header icon-margin" 
+                    onClick={() => history.push('/home')}
+                />
+                :
+                null
+            }
+            {   props.active_iconPerfil ?
+                <RobotOutlined 
+                    className="icon-header"
+                    onClick={() => history.push('/profile')}
+                /> 
+                :
+                null
+            }
+            </div>
         </div>
     );
   }

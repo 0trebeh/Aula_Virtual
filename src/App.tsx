@@ -1,4 +1,7 @@
 import React from 'react';
+
+//import './components/auth';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -25,7 +28,6 @@ import C5 from './pages/challenge/c5';
 import C6 from './pages/challenge/c6';
 import C7 from './pages/challenge/c7';
 import C8 from './pages/challenge/c8';
-
 
 //axios.defaults.baseURL = '';
 

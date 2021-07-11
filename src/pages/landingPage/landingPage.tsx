@@ -13,7 +13,7 @@ import Footer from "../../components/footer";
 import Login from "../../components/login";
 import Register from "../../components/register";
 
-import "./landingPage.css"
+import "./landingPage.css";
 
 function LandingPage() { 
   const [isLoginVisible, setIsLoginVisible] = useState(false);
@@ -34,7 +34,11 @@ function LandingPage() {
 
   return (
     <>
-      <Header text_Subtitle={"Aula Virtual Web"}/>
+      <Header 
+        text_Subtitle={"Aula Virtual Web"}
+        active_iconPerfil={false} 
+        active_iconHome={false}
+      />
         <div className="home-content">
           <h1 style={{color: "#777"}}>
             {text_Title} 

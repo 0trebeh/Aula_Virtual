@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
+import {auth} from '../firebase';
 
 import {  Form, Input, Button, Modal } from 'antd';
 import { 
@@ -23,9 +24,13 @@ const Login = (props: Props) => {
 
     const onFinish = (values: any) => {
       console.log(values);
-      setLoginVisible(!LoginVisible);
-      history.push('/home');
-    };
+      auth.signInWithEmailAndPassword(values.email, values.password)
+      .then(userCredential => {
+        console.log(userCredential);
+        setLoginVisible(!LoginVisible);
+        history.push('/home');
+      });     
+    }; 
 
     const handleCancel = () => {
       setLoginVisible(!LoginVisible);

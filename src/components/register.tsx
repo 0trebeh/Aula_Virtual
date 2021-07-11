@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
+import {auth} from '../firebase';
 
 import {  Form, Input, Button, Switch, Modal } from 'antd';
 import { 
@@ -25,9 +26,14 @@ const Register = (props: Props) => {
 
   const onFinish = (values: any) => {
     console.log(values);
-    setRegisterVisible(!RegisterVisible);
-    history.push('/home');
-  };
+
+    auth.createUserWithEmailAndPassword(values.email, values.password)
+    .then(userCredential => {
+      console.log(userCredential);
+      setRegisterVisible(!RegisterVisible);
+      history.push('/home');
+    });
+  }; 
 
   const handleCancel = () => {
     setRegisterVisible(!RegisterVisible);
@@ -59,12 +65,25 @@ const Register = (props: Props) => {
           <Input size="large" placeholder="Correo electronico" prefix={<MailOutlined />} />
         </Form.Item>
         <Form.Item name={'password'} label="Contraseña" 
-          rules={[{ required: true, message: 'Por favor, ingresa tu contraseña!' }]}
+          rules={[{ 
+            required: true, 
+            message: 'Por favor, ingresa tu contraseña! (minimo seis caracteres)',
+            min: 6 
+          }]}
         >
           <Input.Password size="large" placeholder="Contraseña" prefix={<UnlockOutlined />} />
         </Form.Item>
         <Form.Item name={'ConfirmPassword'} label="Confirmar c" 
-          rules={[{ required: true, message: 'Por favor, confirme su contraseña!' }]}
+          rules={[{ required: true, message: 'Por favor, confirme su contraseña!' },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('¡Las dos contraseñas que ingresó no coinciden!'));
+            },
+          }),
+        ]}
         >
           <Input.Password size="large" placeholder="Confirmar contraseña" prefix={<UnlockOutlined />} />
         </Form.Item>
