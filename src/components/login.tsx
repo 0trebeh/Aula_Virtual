@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {auth} from '../firebase';
 
-import {  Form, Input, Button, Modal } from 'antd';
+import {  message, Form, Input, Button, Modal } from 'antd';
 import { 
   MailOutlined,
   UnlockOutlined 
@@ -23,12 +23,24 @@ const Login = (props: Props) => {
     const [LoginVisible, setLoginVisible] = useState(true);
 
     const onFinish = (values: any) => {
-      console.log(values);
+      //console.log(values);
       auth.signInWithEmailAndPassword(values.email, values.password)
       .then(userCredential => {
         console.log(userCredential);
+        //localStorage.setItem('session', JSON.stringify(values));
         setLoginVisible(!LoginVisible);
         history.push('/home');
+      }, error => {
+        if(error.code === "auth/user-not-found"){
+          message.warning('Usuario no encontrado, asegúrese de escribir bien el correo');
+        }
+        if(error.code === "auth/wrong-password"){
+          message.error('Contraseña incorrecta');
+        }
+        if(error.code === "auth/too-many-requests"){
+          message.warning('Demasiados intentos fallidos, intentar mas tarde');
+        }
+        console.error( 'Error: ', error );
       });     
     }; 
 
@@ -58,6 +70,9 @@ const Login = (props: Props) => {
             </Button>
           </Form.Item>
         </Form>
+        <Button type="primary" htmlType="submit" >
+          Iniciar con google
+        </Button>
       </Modal>
     );
 }

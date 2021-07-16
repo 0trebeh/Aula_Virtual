@@ -20,7 +20,7 @@ const Profile = () => {
   const signOut = () => {
     auth.signOut()
     .then(() => {
-      history.push('/');
+      history.push('');
     }); 
   }
     

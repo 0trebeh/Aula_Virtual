@@ -1,21 +1,24 @@
-import {useHistory} from 'react-router-dom';
 import {auth} from '../firebase';
 
 // list for auth state changes
-auth.onAuthStateChanged((user) => {
+export const Session = () => {
+  auth.onAuthStateChanged((user) => {
     if (user) {
       console.log("signin");
-      useHistory().push('/home');
+      localStorage.setItem("session", "true");
       /*fs.collection("posts")
         .get()
         .then((snapshot) => {
           setupPosts(snapshot.docs);
           loginCheck(user);
         });*/
+        return "1";
     } else {
       console.log("signout");
-      useHistory().push('/');
+      localStorage.setItem("session", "false");
       /*setupPosts([]);
       loginCheck(user);*/
+      return "0";
     }
-});
+  });
+} 

@@ -25,11 +25,10 @@ const Register = (props: Props) => {
   const [Teacher, setTeacher] = useState(false);
 
   const onFinish = (values: any) => {
-    console.log(values);
-
     auth.createUserWithEmailAndPassword(values.email, values.password)
     .then(userCredential => {
       console.log(userCredential);
+      //localStorage.setItem('userData', JSON.stringify(values));
       setRegisterVisible(!RegisterVisible);
       history.push('/home');
     });

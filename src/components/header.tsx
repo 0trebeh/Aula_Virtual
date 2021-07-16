@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
+import {Session} from './auth';
 
 import { RobotOutlined, HomeOutlined } from '@ant-design/icons';
 
@@ -14,6 +15,18 @@ type Props = {
 function Header(props: Props) { 
 
     const history = useHistory();
+
+    useEffect(() => {
+        //verificar sesion de usuario
+        const user = async () => {
+            await Session();
+            if(localStorage.getItem("session") === "false"){
+                console.log("sin sesion");
+                history.push('');
+            }
+        }
+        user();
+    }, []);
 
     var text_Title: string = "Circuitos Logicos";
 
