@@ -17,6 +17,8 @@ import Header from "../../components/header";
 const Profile = () => {
   const history = useHistory();
 
+  const User = JSON.parse(localStorage.getItem("userData") || "{}");
+
   const signOut = () => {
     auth.signOut()
     .then(() => {
@@ -40,10 +42,10 @@ const Profile = () => {
                   src={profile_robot}
                 />
                 <div style={{marginLeft: 25}}>
-                  <h2>Heberto Urribarri</h2>
+                  <h2>{User.name} {User.lastname}</h2>
                   <div style={{display: "flex", justifyContent: "flex-start",}}>
                     <ClockCircleOutlined style={{marginRight: 7, color: "blueviolet"}}/>
-                    <h4>Se unió en julio de 2016</h4>
+                    <h4>Se registro en julio de 2016</h4>
                   </div>
                   <div style={{display: "flex", justifyContent: "flex-start",}}>
                     <ThunderboltOutlined style={{marginRight: 7, color: "orange"}}/>

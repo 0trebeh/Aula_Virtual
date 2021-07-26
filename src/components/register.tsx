@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
-import {auth} from '../firebase';
+import {auth, fire} from '../firebase';
 
-import {  Form, Input, Button, Switch, Modal } from 'antd';
-import { 
-  UserOutlined, 
+import { message, Form, Input, Button, Modal } from 'antd';
+import {
   UnlockOutlined,
-  MailOutlined
+  MailOutlined,
+  GoogleOutlined
 } from '@ant-design/icons';
 
 const layout = {
@@ -22,15 +22,20 @@ const Register = (props: Props) => {
 
   const history = useHistory();
   const [RegisterVisible, setRegisterVisible] = useState(true);
-  const [Teacher, setTeacher] = useState(false);
 
   const onFinish = (values: any) => {
     auth.createUserWithEmailAndPassword(values.email, values.password)
     .then(userCredential => {
       console.log(userCredential);
-      //localStorage.setItem('userData', JSON.stringify(values));
+      localStorage.setItem("data", JSON.stringify({email: values.email}));
       setRegisterVisible(!RegisterVisible);
       history.push('/home');
+    }).catch(error => {
+      
+      if(error.code === "auth/email-already-in-use"){
+        message.error('El correo ya esta en uso en otra cuenta');
+      }
+      console.log(error);
     });
   }; 
 
@@ -38,8 +43,21 @@ const Register = (props: Props) => {
     setRegisterVisible(!RegisterVisible);
   };
 
-  const teacher = () => {
-    setTeacher(!Teacher);
+  const google = () => {
+    const provider = new fire.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then((result) => {
+      console.log(result);
+      var a: any = result.additionalUserInfo;
+
+      var {email} = a.profile;
+      localStorage.setItem("data", JSON.stringify({email}));
+
+      console.log("google sign in");
+      history.push('/home');
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   return (
@@ -48,16 +66,6 @@ const Register = (props: Props) => {
       footer={null}
     >
       <Form {...layout} name="nest-messages" onFinish={onFinish} >
-        <Form.Item name={'name'} label="Nombre" 
-          rules={[{ required: true, message: 'Por favor, ingresa tu nombre!' }]}
-        >
-          <Input size="large" placeholder="Nombre" prefix={<UserOutlined />} />
-        </Form.Item>
-        <Form.Item name={'lastname'} label="Apellido" 
-          rules={[{ required: true, message: 'Por favor, ingresa tu apellido!' }]}
-        >
-          <Input size="large" placeholder="Apellido" prefix={<UserOutlined />} />
-        </Form.Item>
         <Form.Item name={'email'} label="Correo" 
           rules={[{ type: 'email', required: true, message: 'Por favor, ingresa tu correo!' }]}
         >
@@ -86,23 +94,15 @@ const Register = (props: Props) => {
         >
           <Input.Password size="large" placeholder="Confirmar contraseña" prefix={<UnlockOutlined />} />
         </Form.Item>
-        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          <p style={{marginLeft: 7, marginRight: 20}}>Registrarme como maestro: </p>
-          <Form.Item name="teacher" valuePropName="checked" >
-            <Switch onClick={teacher} />
-          </Form.Item>
-        </div>
-        { Teacher ?
-          <h4>Seras profesor</h4>
-          :
-          null
-        }
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 18 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Registrarme
           </Button>
         </Form.Item>
       </Form>
+      <Button type="primary" htmlType="submit" onClick={() => google()}>
+        <GoogleOutlined /> Registrarme con google
+      </Button>
     </Modal>
   );
 }

@@ -2,7 +2,10 @@ import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Session} from './auth';
 
-import { RobotOutlined, HomeOutlined } from '@ant-design/icons';
+import { 
+    RobotOutlined, 
+    HomeOutlined,
+} from '@ant-design/icons';
 
 import "./header.css"
 

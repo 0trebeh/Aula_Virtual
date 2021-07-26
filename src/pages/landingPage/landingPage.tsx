@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import {useHistory} from 'react-router-dom';
 import landingPage_robot from '../../img/landingpage - robot.png';
 
 import { Image, Tooltip, Card } from 'antd';
@@ -16,6 +16,13 @@ import Register from "../../components/register";
 import "./landingPage.css";
 
 function LandingPage() { 
+
+  const history = useHistory();
+
+  if(localStorage.getItem("session") === "true"){
+    history.push('/home');
+  }
+
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
   const [textRobotVisible, setTextRobotVisible] = useState(true);
@@ -30,7 +37,7 @@ function LandingPage() {
   };
 
   const text_Title: string = "\"Atento a lo que el robot tiene que decir\"";
-  const text_message_robot: string = "Hola!, acompañame a conocer el mundo de los circuitos logicos. La magia que mueve a la tecnologia.";
+  const text_message_robot: string = "Hola!, acompañame a conocer el mundo de los circuitos logicos. La magia que mueve a las computadoras.";
 
   return (
     <>

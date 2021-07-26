@@ -12,13 +12,12 @@ export const Session = () => {
           setupPosts(snapshot.docs);
           loginCheck(user);
         });*/
-        return "1";
     } else {
       console.log("signout");
       localStorage.setItem("session", "false");
+      localStorage.removeItem("data");
       /*setupPosts([]);
       loginCheck(user);*/
-      return "0";
     }
   });
 } 

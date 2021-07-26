@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
-import {auth} from '../firebase';
+import {auth, fire} from '../firebase';
 
 import {  message, Form, Input, Button, Modal } from 'antd';
 import { 
   MailOutlined,
-  UnlockOutlined 
+  UnlockOutlined,
+  GoogleOutlined
 } from '@ant-design/icons';
 
 const layout = {
@@ -27,10 +28,13 @@ const Login = (props: Props) => {
       auth.signInWithEmailAndPassword(values.email, values.password)
       .then(userCredential => {
         console.log(userCredential);
-        //localStorage.setItem('session', JSON.stringify(values));
         setLoginVisible(!LoginVisible);
+        localStorage.setItem("data", JSON.stringify(
+            {email: values.email}
+          )
+        );
         history.push('/home');
-      }, error => {
+      }).catch(error => {
         if(error.code === "auth/user-not-found"){
           message.warning('Usuario no encontrado, asegúrese de escribir bien el correo');
         }
@@ -40,9 +44,29 @@ const Login = (props: Props) => {
         if(error.code === "auth/too-many-requests"){
           message.warning('Demasiados intentos fallidos, intentar mas tarde');
         }
+        if(error.code === "auth/network-request-failed"){
+          message.error('tiempo de espera superado, conexión interrumpida o host inaccesible');
+        }
         console.error( 'Error: ', error );
-      });     
+      });   
     }; 
+
+    const google = () => {
+      const provider = new fire.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).then((result) => {
+        console.log(result);
+        var a: any = result.additionalUserInfo;
+
+        var {email} = a.profile;
+        localStorage.setItem("data", JSON.stringify({email}));
+
+        console.log("google sign in");
+        history.push('/home');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
 
     const handleCancel = () => {
       setLoginVisible(!LoginVisible);
@@ -70,8 +94,8 @@ const Login = (props: Props) => {
             </Button>
           </Form.Item>
         </Form>
-        <Button type="primary" htmlType="submit" >
-          Iniciar con google
+        <Button type="primary" htmlType="submit" onClick={() => google()}>
+          <GoogleOutlined /> Entrar con google
         </Button>
       </Modal>
     );
