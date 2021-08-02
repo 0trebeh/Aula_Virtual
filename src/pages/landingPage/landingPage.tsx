@@ -46,12 +46,12 @@ function LandingPage() {
         active_iconPerfil={false} 
         active_iconHome={false}
       />
-        <div className="home-content">
+        <div className="landing-content">
           <h1 style={{color: "#777"}}>
             {text_Title} 
           </h1>
-          <div className="home-body">
-            <div className="robot-home">
+          <div className="landing-body">
+            <div className=".robot-landingpage">
               <Tooltip placement="rightTop" color="#1890ff" title={text_message_robot} visible={textRobotVisible}>
                 <Image
                   width={300}

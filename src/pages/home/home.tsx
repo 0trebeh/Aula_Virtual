@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import {auth, fs} from '../../firebase';
+import React, { useState, useEffect } from 'react'; 
+import {fs} from '../../firebase';
 
-import {  Form, Input, Button, Switch, Modal } from 'antd';
+import home_robot from '../../img/home-robot.png';
+
+import {  Image, Tooltip, Card, Form, Input, Button, Switch, Modal } from 'antd';
 import { 
   UserOutlined, 
+  SolutionOutlined
 } from '@ant-design/icons';
 
 import Header from "../../components/header";
+import Footer from "../../components/footer";
+
+import "./home.css";
 
 const layout = {
   labelCol: { span: 5 },
@@ -55,16 +61,91 @@ const Home = () => {
     console.log(doc);
   }; 
 
+  const text_message_robot = "Selecciona una opcion del menu!";
+  const text_message_robot_seccion = "Busca una seccion para iniciar las clases!";
+
   return (
     <>
-      <div>
+      <>
         <Header 
-          text_Subtitle={"Perfil"}
+          text_Subtitle={"Home"}
           active_iconPerfil={true} 
           active_iconHome={true}
         />
 
-      </div>
+        <div className="home-content">
+          <h1 style={{color: "#777"}}>
+            title
+          </h1>
+          <div className="home-body">
+            <div>
+              <div className="card-body-home">
+                <Card 
+                  bordered={false} 
+                  className="card-body-homeStyle card-theory"
+                  bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
+                >
+                  <h2 className="text-botton">Teoria</h2>
+                  <SolutionOutlined className="icon-botton-home"/>
+                </Card>
+                <Card 
+                  bordered={false} 
+                  className="card-body-homeStyle card-laboratory" 
+                  bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
+                >
+                  <h2 className="text-botton">Laboratorio</h2>
+                  <SolutionOutlined className="icon-botton-home"/>
+                </Card>
+              </div>
+              { RegisterComplete /* RegisterComplete || InSeccion */ ?
+              <div className="card-body-home">
+                <Card 
+                  bordered={false} 
+                  className="card-body-homeStyle card-task"
+                  bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
+                >
+                  <h2 className="text-botton">Tarea</h2>
+                  <SolutionOutlined className="icon-botton-home"/>
+                </Card>
+                <Card 
+                  bordered={false} 
+                  className="card-body-homeStyle card-stats" 
+                  bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
+                >
+                  <h2 className="text-botton">Estadisticas</h2>
+                  <SolutionOutlined className="icon-botton-home"/>
+                </Card>
+              </div>
+              :
+              <div className="card-body-home">
+                <Card 
+                  bordered={false} 
+                  className="card-body-search card-Search"
+                  bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
+                >
+                  <h2 className="text-botton">Buscar Seccion</h2>
+                  <SolutionOutlined className="icon-botton-home"/>
+                </Card>
+              </div>
+              }
+            </div>
+            <div className="robot-home">
+              <Tooltip placement="leftTop" color="#1890ff" 
+                title={ RegisterComplete ? text_message_robot : text_message_robot_seccion} 
+                visible={!RegisterVisible}
+              >
+                <Image
+                  width={300}
+                  preview={false}
+                  src={home_robot}
+                />
+              </Tooltip>
+            </div>
+          </div>
+        </div>
+      <Footer/>
+
+      </>
 
     { !RegisterComplete ?
       <Modal title="Completar registro" visible={RegisterVisible}

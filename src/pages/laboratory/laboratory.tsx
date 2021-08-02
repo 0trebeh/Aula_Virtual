@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Card, Table, Input, Button } from 'antd';
+import { message, Card, Table, Input, Button } from 'antd';
 import { 
   CalculatorOutlined, 
 } from '@ant-design/icons';
@@ -8,42 +8,54 @@ import {
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
+type DataSource = [{
+  key: string,
+  w: number,
+  x: number,
+  y: number,
+  z: number,
+  f: number
+}];
+
 const Laboratory = () => {
 
   const [expression, setExpression] = useState("");
-  //const [dataSource, setDataSource] = useState("");
+  const [dataSource, setDataSource] = useState([{
+    key: "0",
+    w: 0,
+    x: 0,
+    y: 0,
+    z: 0,
+    f: 0
+  }]);
   //const [columns, setColumns] = useState("");
 
-  const dataSource = [
-    {
-      key: '1',
-      name: 0,
-      age: 0,
-      address: 0,
-    },
-    {
-      key: '2',
-      name: 1,
-      age: 1,
-      address: 1,
-    },
-  ];
 
   const columns = [
     {
+      title: 'w',
+      dataIndex: 'w',
+      key: 'w',
+    },
+    {
       title: 'x',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'x',
+      key: 'x',
     },
     {
       title: 'y',
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'y',
+      key: 'y',
+    },
+    {
+      title: 'z',
+      dataIndex: 'z',
+      key: 'z',
     },
     {
       title: 'f',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'f',
+      key: 'f',
     },
   ];
 
@@ -56,18 +68,89 @@ const Laboratory = () => {
   }
 
   const truthTable = () => {
-    console.log(expression)
-  }
+    var stack = [];
+    var w = 0, x = 0, y = 0, z = 0;
 
-/*
-  const fixedData = [];
-  for (let i = 0; i < 20; i += 1) {
-    fixedData.push({
-      key: i,
-      name: ['Light', 'Bamboo', 'Little'][i % 3],
-      description: 'Everything that has a beginning, has an end.',
-    });
-  }*/
+    //Comprobacion de parentesis
+    for(let single of expression){
+
+      if(single === "w"){
+        w = 1;
+      }
+      if(single === "x"){
+        x = 1;
+      }
+      if(single === "y"){
+        y = 1;
+      }
+      if(single === "z"){
+        z = 1;
+      }
+
+      if(single === "("){
+        stack.push("(");
+      }
+      if(single === ")"){
+        if(stack.length === 0){
+          //parentesis de cierre de mas
+          message.error("Syntax Error comprueba los paréntesis");
+          return console.log(false);
+        } else {
+          stack.pop();
+        }      
+      }
+    }
+    if(stack.length === 0){
+      message.success("Listo");
+    } else {
+      message.error("Syntax Error comprueba los paréntesis");
+    }
+
+    console.log((w+x+y+z)**2);
+
+    //Armar la tabla
+    var listTable: any[] = [];
+    for (let i = 0; i < (w+x+y+z)**2; i++) {
+      var binary = i.toString(2).toString().split('');
+      var listBinary = binary.map(Number);
+      var listOfListBinary : any[] = [];
+
+      if(listBinary.length === 1){
+        listOfListBinary = [0,0,0].concat(listBinary);
+        console.log(listOfListBinary);
+      }
+      if(listBinary.length === 2){
+        listOfListBinary = [0,0].concat(listBinary);
+        console.log(listOfListBinary);
+      }
+      if(listBinary.length === 3){
+        listOfListBinary = [0].concat(listBinary);
+        console.log(listOfListBinary);
+      }
+      if(listBinary.length === 4){
+        listOfListBinary = listBinary;
+        console.log(listOfListBinary);
+      }
+
+      listTable.push({
+        key: i.toString(),
+        w: listOfListBinary[0],
+        x: listOfListBinary[1],
+        y: listOfListBinary[2],
+        z: listOfListBinary[3],
+        f:0
+      });
+
+      /*for (var j = 0; j < 4; j ++) {
+        if(j === 4){
+          //push
+        }
+      }*/
+    }
+
+    setDataSource(listTable);
+    console.log(listTable);
+  }
     
     return (
         <>
@@ -77,7 +160,7 @@ const Laboratory = () => {
             active_iconHome={true}
           />
 
-          <div style={{ height: "calc(100vh - 104px)", display: "flex", justifyContent: "space-around", alignItems: "center" }} >
+          <div style={{ minHeight: "calc(100vh - 104px)", display: "flex", justifyContent: "space-around", alignItems: "center" }} >
             <div>
               <Card style={{ width: 300, backgroundColor: "#ddd" }}>
                 <Input size="large" placeholder="Intruduce la funcion" 
@@ -85,11 +168,11 @@ const Laboratory = () => {
                   value={expression}
                 />
                 <div style={{display: "flex", justifyContent: "space-between", marginTop: 5 }}>
+                <Button onClick={() => calculator("w")}>w</Button>
                 <Button onClick={() => calculator("x")}>x</Button>
                 <Button onClick={() => calculator("y")}>y</Button>
                 <Button onClick={() => calculator("z")}>z</Button>
                 <Button onClick={() => calculator("~")}>~</Button>
-                <Button onClick={() => calculator("*")}>*</Button>
                 <Button onClick={() => calculator("+")}>+</Button>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-between", marginTop: 5 }}>

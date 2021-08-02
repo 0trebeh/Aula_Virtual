@@ -1,0 +1,96 @@
+.home-content {
+    height: calc(100vh - 104px); 
+    padding: 40px;
+    padding-top: 20px;
+    text-align: center;
+    min-width: 610px;
+}
+
+.home-body { 
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+    margin-top: 40px;
+}
+
+.robot-home { 
+    display: flex;
+    align-items: flex-start;
+}
+
+.card-body-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 470px;
+    margin-right: 10px;
+}
+
+.card-body-homeStyle {
+    width: 220px;
+    border-radius: 2px;
+    margin-top: 10px;
+    transition: all .5s;
+}
+
+.card-body-homeStyle:hover {
+    width: 240px;
+    cursor: pointer;
+}
+
+.card-body-search {
+    width: 450px;
+    border-radius: 2px;
+    margin-top: 10px;
+    transition: all .5s;
+}
+
+.card-body-search:hover {
+    width: 470px;
+    cursor: pointer;
+}
+
+.card-task {
+    background-color: #f5222d;
+}
+
+.card-task:active {
+    background-color: #96030b;
+}
+
+.card-theory {
+    background-color: #ff9400;
+}
+
+.card-theory:active {
+    background-color: #af6600;
+}
+
+.card-stats {
+    background-color: #349239;
+}
+
+.card-stats:active {
+    background-color: #034e00;
+}
+
+.card-laboratory {
+    background-color: #4d68c0;
+}
+
+.card-laboratory:active {
+    background-color: #1f3479;
+}
+
+.card-Search {
+    background-color: #61338b;
+}
+
+.card-Search:active {
+    background-color: #3a1a58;
+}
+
+.icon-botton-home { 
+    font-size: 35px; 
+    color: #fff 
+}
