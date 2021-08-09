@@ -11,7 +11,7 @@ import LandingPage from "./pages/landingPage/landingPage";
 import Home from "./pages/home/home";
 import Theory from "./pages/theory/theory";
 import Laboratory from './pages/laboratory/laboratory';
-import Task from './pages/task/task';
+import Chat from './pages/chat/chat';
 import Ratings from './pages/ratings/ratings';
 import Profile from './pages/profile/profile';
 import Evolution from './pages/evolution/evolution';
@@ -42,7 +42,7 @@ function App() {
           <Route exact path='/home' component={Home} />
           <Route exact path='/theory' component={Theory} />
           <Route exact path='/laboratory' component={Laboratory} />
-          <Route exact path='/task' component={Task} />
+          <Route exact path='/chat' component={Chat} />
           <Route exact path='/ratings' component={Ratings} />
           <Route exact path='/profile' component={Profile} />
           <Route exact path='/evolution' component={Evolution} />

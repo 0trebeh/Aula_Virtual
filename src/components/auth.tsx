@@ -16,6 +16,7 @@ export const Session = () => {
       console.log("signout");
       localStorage.setItem("session", "false");
       localStorage.removeItem("data");
+      localStorage.removeItem("userData");
       /*setupPosts([]);
       loginCheck(user);*/
     }

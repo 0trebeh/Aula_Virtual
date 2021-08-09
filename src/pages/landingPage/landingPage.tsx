@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import landingPage_robot from '../../img/landingpage - robot.png';
 
@@ -18,6 +18,10 @@ import "./landingPage.css";
 function LandingPage() { 
 
   const history = useHistory();
+
+  useEffect(() => {
+    localStorage.removeItem("userData");
+  });
 
   if(localStorage.getItem("session") === "true"){
     history.push('/home');
