@@ -1,0 +1,74 @@
+.card-body-theoryStyle {
+    width: 220px;
+    border-radius: 2px;
+    margin-top: 10px;
+    transition: all .5s;
+}
+
+.card-body-theoryStyle:hover {
+    width: 240px;
+    cursor: pointer;
+}
+
+.card-body-theory {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 470px;
+    margin-right: 10px;
+}
+
+
+.card-algebra {
+    background-color: #f5222d;
+}
+
+.card-algebra:active {
+    background-color: #96030b;
+}
+
+.card-circuitos {
+    background-color: #ff9400;
+}
+
+.card-circuitos:active {
+    background-color: #af6600;
+}
+
+.card-tablas {
+    background-color: #349239;
+}
+
+.card-tablas:active {
+    background-color: #034e00;
+}
+
+.card-binario {
+    background-color: #4d68c0;
+}
+
+.card-binario:active {
+    background-color: #1f3479;
+}
+
+.card-Compuertas {
+    width: 240px;
+    background-color: #61338b;
+}
+
+.card-Compuertas:hover {
+    width: 260px;
+}
+
+.card-Compuertas:active {
+    background-color: #3a1a58;
+}
+
+.icon-botton-theory { 
+    font-size: 35px; 
+    color: #fff 
+}
+
+h3 {
+    color: #303030;
+}

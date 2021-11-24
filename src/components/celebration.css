@@ -1,0 +1,6 @@
+.body-Celebration {
+    background-repeat: no-repeat;
+    background-image: url('../img/fest.gif');
+    background-size: cover;
+    box-shadow: inset 0px 100vh 500px 0px #ffffff;
+}

@@ -157,9 +157,6 @@ const Home = () => {
         />
 
         <div className="home-content">
-          <h1 style={{color: "#777"}}>
-            title
-          </h1>
           <div className="home-body">
             <div>
               <div className="card-body-home">

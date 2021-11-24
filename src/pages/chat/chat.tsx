@@ -58,9 +58,10 @@ const Chat = () => {
   }, []);
 
   const onFinish = async (values: any) => {
-    var data = {name: User.name, description: values.message};
-    console.log(data);
-    const doc = await fs.collection(section).doc(Date.now().toString()).set(data);
+    var message = {title: User.name, description: values.message};
+    data.push(message);
+    console.log(message);
+    const doc = await fs.collection(section).doc(Date.now().toString()).set(message);
   };
 
   /*const normFile = (e: any) => {

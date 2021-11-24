@@ -10,17 +10,15 @@ import 'antd/dist/antd.css';
 import LandingPage from "./pages/landingPage/landingPage";
 import Home from "./pages/home/home";
 import Theory from "./pages/theory/theory";
+import Definition from './pages/theory/definition';
+import Exercise from './pages/theory/exercise';
 import Laboratory from './pages/laboratory/laboratory';
 import Chat from './pages/chat/chat';
 import Ratings from './pages/ratings/ratings';
 import Profile from './pages/profile/profile';
-import Evolution from './pages/evolution/evolution';
 import Delivers from './pages/delivers/delivers';
-import Challenge from './pages/challenge/challenge';
-import C1 from './pages/challenge/c1';
-import C2 from './pages/challenge/c2';
-import C3 from './pages/challenge/c3';
-import C4 from './pages/challenge/c4';
+import Diagram from './pages/diagram/diagram';
+import Celebration from './components/celebration';
 import NotFound from './components/notFound';
 
 function App() {
@@ -40,18 +38,16 @@ function App() {
         <Switch>
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/home' component={Home} />
+          <Route exact path='/diagram' component={Diagram} />
           <Route exact path='/theory' component={Theory} />
+          <Route exact path='/theory/definition' component={Definition} />
+          <Route exact path='/theory/exercise' component={Exercise} />
           <Route exact path='/laboratory' component={Laboratory} />
           <Route exact path='/chat' component={Chat} />
           <Route exact path='/ratings' component={Ratings} />
           <Route exact path='/profile' component={Profile} />
-          <Route exact path='/evolution' component={Evolution} />
           <Route exact path='/delivers' component={Delivers} />
-          <Route exact path='/challenge' component={Challenge} />
-          <Route exact path='/challenge/c1' component={C1} />
-          <Route exact path='/challenge/c2' component={C2} />
-          <Route exact path='/challenge/c3' component={C3} />
-          <Route exact path='/challenge/c4' component={C4} />
+          <Route exact path='/fest' component={Celebration} />
           <Route component={NotFound} />
         </Switch>
       </Router>

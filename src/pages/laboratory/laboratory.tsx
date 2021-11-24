@@ -110,7 +110,7 @@ const Laboratory = () => {
 
     //Armar la tabla
     var listTable: any[] = [];
-    for (let i = 0; i < (w+x+y+z)**2; i++) {
+    for (let i = 0; i < 2**(w+x+y+z); i++) {
       var binary = i.toString(2).toString().split('');
       var listBinary = binary.map(Number);
       var listOfListBinary : any[] = [];
