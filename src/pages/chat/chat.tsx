@@ -12,42 +12,48 @@ import Footer from "../../components/footer";
 
 const Chat = () => {   
 
-  // [Message, setMessage] = useState([]);
+  const [Message, setMessage] = useState("");
   const [Loading, setLoading] = useState(true);
-  /*var section = JSON.parse(localStorage.getItem("userData") || "{section: 'Prueba'}").section;  
-  const User = JSON.parse(localStorage.getItem("userData") || "{name: 'default'}");*/
+  var section = JSON.parse(localStorage.getItem("userData") || "{'section': 'Prueba'}").section;  
+  const User = JSON.parse(localStorage.getItem("userData") || "{'name': 'default'}");
 
-  var data = [
-    {
-      title: '...',
-      description: "... ...",
-    },
-  ];
+  const [data, setdata] = useState([{title: '...', description: "... ...", date: "../../../", time: ".."},]);
 
   useEffect(() => {
     const getData = async () => {
-      /*var docRef = db.collection("cities").doc("SF");
+      var docRef = fs.collection("Prueba").doc("message");
 
-      docRef.get().then((doc) => {
+      /*docRef.get().then((doc: any) => {
           if (doc.exists) {
-              console.log("Document data:", doc.data());
+              console.log("Document data:", doc.data(), "fin");
+              //setdata();
           } else {
               // doc.data() will be undefined in this case
               console.log("No such document!");
           }
-      }).catch((error) => {
+      }).catch((error: any) => {
           console.log("Error getting document:", error);
-      }); 
+      }); */
+
       const doc = await fs.collection(section).get().then(snapshot => {
-
-
+        
+        var temp = [{title: '...', description: "... ...", date: "../../../", time: ".."},];
+        temp.pop();
         snapshot.forEach(doc => {
       
-          console.log( doc.data());    
-      
+          console.log(doc.data());   
+          var {title, description, date, time} = doc.data();
+
+          temp.push({
+            title, 
+            description, 
+            date, 
+            time
+          });
         });
-      
-      });*/
+        temp.pop();
+        setdata(temp); 
+      });
 
     }
     getData();
@@ -55,13 +61,25 @@ const Chat = () => {
     setLoading(false);
   }, []);
 
-  const onFinish = async (values: any) => {
-    /*var message = {title: User.name, description: values.message};
+  const onFinish = async () => {
+    
+    var nowId = Date.now();
+    var now = new Date(nowId);
+    var date = now.getDate() + '/' + ( now.getMonth() + 1 ) + '/' + now.getFullYear();
+    var time = now.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+    var message = {title: User.name, description: Message, time, date };
     data.push(message);
-    console.log(message);
-    const doc = await fs.collection(section).doc(Date.now().toString()).set(message);*/
+    
+    setMessage("");
+    const doc = await fs.collection(section).doc(nowId.toString()).set(message);
   };
 
+  const onChangeMessage = async (e: any) => {
+    await setMessage(e);
+  }
+
+  //subir files
   /*const normFile = (e: any) => {
     console.log('Upload event:', e);
   
@@ -93,33 +111,38 @@ const Chat = () => {
                 <List.Item>
                   <List.Item.Meta
                     avatar={<Avatar src={profile_robot} />}
-                    title={<h3 style={{color:"#CCD1D1"}}>{item.title}</h3>}
+                    title={
+                      <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <h3 style={{color:"#CCD1D1"}}>{item.title}</h3>
+                        <p style={{color:"#909494"}}>{item.time} - {item.date}</p>
+                      </div>
+                    }
                     description={<p style={{color:"#F2F3F4"}}>{item.description}</p>}
                   />
                 </List.Item>
               )}
             />
           </div>
+
+          <div style={{width:"100%", backgroundColor:"#1D4368", paddingTop:5,  }}>
+            <div style={{ marginLeft: 10, display:"flex", width:"95%",}}>
+              <Input 
+                  placeholder="Escribe tu mensaje" 
+                  value={Message}
+                  onChange={(e)=> onChangeMessage(e.target.value)}
+              />
+              <Button type="primary" htmlType="submit" onClick={() => onFinish()}>
+                Enviar
+              </Button>
+            </div>
+            
+          </div>
           
-          <Form
+          {/*<Form
             name="form"
             onFinish={onFinish}
             style={{width:"100%", backgroundColor:"#1D4368", paddingTop:5 }}
-          >
-            <div style={{ marginLeft: 10, display:"flex", width:"100%",}}>
-              <Form.Item name="message" style={{minWidth:"80%", height: 20}}>
-                <Input placeholder="Escribe tu mensaje"/>
-              </Form.Item>
-
-              <Form.Item
-                style={{marginLeft: 10, padding: 0, minWidth:"15%", height: 20}}
-              >
-                <Button type="primary" htmlType="submit">
-                  Enviar
-                </Button>
-              </Form.Item>
-            </div>
-            
+          >          
             {/*<Form.Item
               style={{marginLeft: 10, minWidth:"5%",}}
               name="upload"
@@ -129,8 +152,10 @@ const Chat = () => {
               <Upload name="logo" action="/upload.do" listType="picture">
                 <Button type="dashed"><UploadOutlined /></Button>
               </Upload>
-            </Form.Item>*/}
-          </Form>
+            </Form.Item>}
+          </Form>*/}
+
+
         </div>
         <Affix offsetTop={120} onChange={affixed => console.log(affixed)}>
           <div className="robot-home">

@@ -4,7 +4,7 @@ import {fs} from '../../firebase';
 
 import home_robot from '../../img/home-robot.png';
 
-import {  Image, Tooltip, Card, Form, Input, Button, Switch, Modal } from 'antd';
+import {  Image, Tooltip, Card, Form, Input, Button, Switch, Modal, message } from 'antd';
 import { 
   UserOutlined, 
   MailOutlined,
@@ -87,6 +87,8 @@ const Home = () => {
     console.log(data);
     const doc = await fs.collection("userData").doc(id).set(data);
 
+    console.log(doc);
+
     if(doc === undefined){
       setRegisterComplete(!RegisterComplete);
     }
@@ -105,20 +107,27 @@ const Home = () => {
   }
 
   const createSection = async (values: any) => {
-    console.log(values);
-    const doc = await fs.collection(values.name).doc(values.name).set(values);
-
-    var update = fs.collection('userData').doc(id);
-
-    var setUpdate = update.set({
-      section: values.name
-    }, { merge: true });
-
-    setSection(values.name);
-
-    if(doc === undefined){
-      setFormSeccion(!FormSeccion);
-      setTooltipVisible(true);
+    
+    if(values.name === "false"){
+      message.error("No puede llamar a su seccion " + values.name);
+    } else {
+      const doc = await fs.collection(values.name).doc(values.name).get();
+      if(doc.exists){
+        message.error("Ya Existe una seccion llamada " + values.name);
+      } else {
+        const set = await fs.collection(values.name).doc(values.name).set(values);
+        var update = fs.collection('userData').doc(id);
+  
+        var setUpdate = update.set({
+          section: values.name
+        }, { merge: true });
+  
+        const create = await fs.collection(values.name).doc(values.name).set(values);
+        
+        setSection(values.name);
+  
+        history.push('profile');
+      }
     }
   }
 
@@ -131,21 +140,20 @@ const Home = () => {
     console.log(values);
 
     const doc = await fs.collection(values.name).doc(values.name).get();
-    console.log(doc);
+    console.log(doc.exists);
 
-    if(doc){
+    if(doc.exists){
       var update = fs.collection('userData').doc(id);
       var setUpdate = update.set({
         section: values.name
       }, { merge: true });
 
       history.push('profile');
-
-      if(true){
-        setSearchSeccion(false);
-        setTooltipVisible(true);
-      }
+    } else {
+      message.error("No existe una seccion llamada " + values.name);
     }
+    setSearchSeccion(false);
+    setTooltipVisible(true);
   }
   
   const text_message_robot = "Selecciona una opcion del menu!";
