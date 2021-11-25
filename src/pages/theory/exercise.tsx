@@ -12,26 +12,36 @@ import TablasDeVerdad from "./exercise/tablasDeVerdad";
 import CompuertasLogicas from "./exercise/compuertasLogicas";
 
 import { 
-    DoubleRightOutlined
+    DoubleRightOutlined,
+    DoubleLeftOutlined
 } from '@ant-design/icons';
 
-const Exercise = (props : any) => {
+const Exercise = () => {
     const history = useHistory();
     const [Visible, setVisible] = useState(false);
-    const [Next, setNext] = useState("");
+    const next = JSON.parse(localStorage.getItem("next") || "{Circuitos logicos}");
     
     const handleCancel = () => {
         setVisible(!Visible);
+        history.push('/theory');
     }; 
 
-    if(props.location.state.detail === "Circuitos logicos"){
-        setNext("Sistema binarios");
-    } else if(props.location.state.detail === "Sistema binarios"){
-        setNext("Algebra booleana");
-    } else if(props.location.state.detail === "Algebra booleana"){
-        setNext("Tablas de verdad");
-    } else if(props.location.state.detail === "Tablas de verdad"){
-        setNext("Compuertas logicas");
+    const nextPage = async () => {
+        if(next === "Compuertas logicas"){
+            setVisible(!Visible);
+        } else {
+            if(next === "Circuitos logicos"){
+                await localStorage.setItem("next", JSON.stringify("Sistema binarios"));
+            } else if(next === "Sistema binarios"){
+                await localStorage.setItem("next", JSON.stringify("Algebra booleana"));
+            } else if(next === "Algebra booleana"){
+                await localStorage.setItem("next", JSON.stringify("Tablas de verdad"));
+            } else if(next === "Tablas de verdad"){
+                await localStorage.setItem("next", JSON.stringify("Compuertas logicas"));
+            }
+            history.push('/theory/definition');
+        }
+        
     }
 
     return (
@@ -42,15 +52,15 @@ const Exercise = (props : any) => {
                 active_iconHome={true}
             />
 
-            {   props.location.state.detail === "Circuitos logicos" ?
+            {   next === "Circuitos logicos" ?
                 <CircuitosLogicos/>:
-                props.location.state.detail === "Sistema binarios" ?
+                next === "Sistema binarios" ?
                 <SistemaBinarios/>:
-                props.location.state.detail === "Algebra booleana" ?
+                next === "Algebra booleana" ?
                 <AlgebraBooleana/>:
-                props.location.state.detail === "Tablas de verdad" ?
+                next === "Tablas de verdad" ?
                 <TablasDeVerdad/>:
-                props.location.state.detail === "Compuertas logicas" ?
+                next === "Compuertas logicas" ?
                 <CompuertasLogicas/>:
                 null
             }
@@ -62,14 +72,19 @@ const Exercise = (props : any) => {
                 <Button 
                     type="primary" 
                     htmlType="submit" 
-                    onClick={() => history.push({
-                        pathname: '/theory/definition',
-                        state: { Next }
-                    })}
+                    onClick={() => history.push('/theory/definition')}
+                    style={{backgroundColor:"#ff9400", borderColor:"#af6600",  marginRight:30}}
+                >
+                    <DoubleLeftOutlined style={{marginRight:5}}/> Volver 
+                </Button>
+                <Button 
+                    type="primary" 
+                    htmlType="submit" 
+                    onClick={() => nextPage()}
                     style={{backgroundColor:"#ff9400", borderColor:"#af6600"}}
                 >
                     Siguiente <DoubleRightOutlined style={{marginLeft:5}}/>
-                </Button> 
+                </Button>       
             </div>
 
             <Modal visible={Visible}

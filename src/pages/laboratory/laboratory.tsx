@@ -8,15 +8,6 @@ import {
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
-type DataSource = [{
-  key: string,
-  w: number,
-  x: number,
-  y: number,
-  z: number,
-  f: number
-}];
-
 const Laboratory = () => {
 
   const [expression, setExpression] = useState("");
@@ -28,36 +19,13 @@ const Laboratory = () => {
     z: 0,
     f: 0
   }]);
-  //const [columns, setColumns] = useState("");
 
-
-  const columns = [
-    {
-      title: 'w',
-      dataIndex: 'w',
-      key: 'w',
-    },
-    {
-      title: 'x',
-      dataIndex: 'x',
-      key: 'x',
-    },
-    {
-      title: 'y',
-      dataIndex: 'y',
-      key: 'y',
-    },
-    {
-      title: 'z',
-      dataIndex: 'z',
-      key: 'z',
-    },
-    {
-      title: 'f',
-      dataIndex: 'f',
-      key: 'f',
-    },
-  ];
+  const InW = { title: 'A', dataIndex: 'w', key: 'w',};
+  const InX = { title: 'B', dataIndex: 'x', key: 'x',};
+  const InY = { title: 'C', dataIndex: 'y', key: 'y',};
+  const InZ = { title: 'D', dataIndex: 'z', key: 'z',};
+  const OutF = { title: 'S', dataIndex: 'f', key: 'f',};
+  const [columns, setcolumns] = useState([InW, InX, InY, InZ, OutF]);
 
   const calculator = (param: string) => {
     setExpression(expression + param);
@@ -67,23 +35,33 @@ const Laboratory = () => {
     setExpression("");
   }
 
-  const truthTable = () => {
+  const truthTable = async () => {
+
+
+/*
+      split(+);
+      split(.);
+      split(~); --> y~x -> ~x
+*/
+
+
     var stack = [];
     var w = 0, x = 0, y = 0, z = 0;
 
     //Comprobacion de parentesis
     for(let single of expression){
 
-      if(single === "w"){
+      if(single === "A"){
         w = 1;
+
       }
-      if(single === "x"){
+      if(single === "B"){
         x = 1;
       }
-      if(single === "y"){
+      if(single === "C"){
         y = 1;
       }
-      if(single === "z"){
+      if(single === "D"){
         z = 1;
       }
 
@@ -106,30 +84,52 @@ const Laboratory = () => {
       message.error("Syntax Error comprueba los paréntesis");
     }
 
-    console.log((w+x+y+z)**2);
-
     //Armar la tabla
     var listTable: any[] = [];
     for (let i = 0; i < 2**(w+x+y+z); i++) {
       var binary = i.toString(2).toString().split('');
+      
       var listBinary = binary.map(Number);
       var listOfListBinary : any[] = [];
 
-      if(listBinary.length === 1){
-        listOfListBinary = [0,0,0].concat(listBinary);
-        console.log(listOfListBinary);
-      }
-      if(listBinary.length === 2){
-        listOfListBinary = [0,0].concat(listBinary);
-        console.log(listOfListBinary);
-      }
-      if(listBinary.length === 3){
-        listOfListBinary = [0].concat(listBinary);
-        console.log(listOfListBinary);
-      }
-      if(listBinary.length === 4){
+      if(w+x+y+z === 1){
         listOfListBinary = listBinary;
-        console.log(listOfListBinary);
+      } 
+      
+      if(w+x+y+z === 2){
+        if(listBinary.length === 1){
+          listOfListBinary = [0].concat(listBinary);
+        }
+        if(listBinary.length === 2){
+          listOfListBinary = listBinary;
+        }
+      } 
+
+      if(w+x+y+z === 3){
+        if(listBinary.length === 1){
+          listOfListBinary = [0,0].concat(listBinary);
+        }
+        if(listBinary.length === 2){
+          listOfListBinary = [0].concat(listBinary);
+        }
+        if(listBinary.length === 3){
+          listOfListBinary = listBinary;
+        }
+      } 
+
+      if(w+x+y+z === 4){
+        if(listBinary.length === 1){
+          listOfListBinary = [0,0,0].concat(listBinary);
+        }
+        if(listBinary.length === 2){
+          listOfListBinary = [0,0].concat(listBinary);
+        }
+        if(listBinary.length === 3){
+          listOfListBinary = [0].concat(listBinary);
+        }
+        if(listBinary.length === 4){
+          listOfListBinary = listBinary;
+        }
       }
 
       listTable.push({
@@ -140,16 +140,27 @@ const Laboratory = () => {
         z: listOfListBinary[3],
         f:0
       });
-
-      /*for (var j = 0; j < 4; j ++) {
-        if(j === 4){
-          //push
-        }
-      }*/
     }
-
+    
+    var columnsReal : any[] = [];
+    if(w === 1){
+      columnsReal.push(InW);
+    }
+    if(x === 1){
+      columnsReal.push(InX);
+    }
+    if(y === 1){
+      columnsReal.push(InY);
+    }
+    if(z === 1){
+      columnsReal.push(InZ);
+    }
+    if(w+x+y+z !== 0){
+      columnsReal.push(OutF);
+    } 
+    
+    setcolumns(columnsReal);
     setDataSource(listTable);
-    console.log(listTable);
   }
     
     return (
@@ -167,17 +178,20 @@ const Laboratory = () => {
                   prefix={<CalculatorOutlined style={{color:"#bbb"}}/>}
                   value={expression}
                 />
-                <div style={{display: "flex", justifyContent: "space-between", marginTop: 5 }}>
-                <Button onClick={() => calculator("w")}>w</Button>
-                <Button onClick={() => calculator("x")}>x</Button>
-                <Button onClick={() => calculator("y")}>y</Button>
-                <Button onClick={() => calculator("z")}>z</Button>
+                <div style={{display: "flex", justifyContent: "space-between", marginTop: 5, width: "80%" }}>
+                <Button onClick={() => calculator("A")}>A</Button>
+                <Button onClick={() => calculator("B")}>B</Button>
+                <Button onClick={() => calculator("C")}>C</Button>
+                <Button onClick={() => calculator("D")}>D</Button>
+                </div>
+                <div style={{display: "flex", justifyContent: "flex-start", marginTop: 5 }}>
                 <Button onClick={() => calculator("~")}>~</Button>
                 <Button onClick={() => calculator("+")}>+</Button>
-                </div>
-                <div style={{display: "flex", justifyContent: "space-between", marginTop: 5 }}>
+                <Button onClick={() => calculator(".")}>.</Button>
                 <Button onClick={() => calculator("(")}>(</Button>
                 <Button onClick={() => calculator(")")}>)</Button>
+                </div>
+                <div style={{display: "flex", justifyContent: "flex-start", marginTop: 5 }}>
                 <Button onClick={clean} style={{color:"#ff9400"}}>Limpiar</Button>
                 <Button onClick={clean} style={{color:"#f5222d"}}>Eliminar</Button>
                 </div>
@@ -185,10 +199,10 @@ const Laboratory = () => {
                 <Button onClick={truthTable}  style={{color:"#1890ff"}}>Ejecutar</Button>
                 </div>
               </Card>
-              <h3>Leyenda:</h3>
-              <h4>~ : Inversor</h4>
-              <h4>* : And</h4>
-              <h4>+ : Or</h4>
+              <h2>Leyenda:</h2>
+              <h4>Inversor = ~</h4>
+              <h4>Or = +</h4>
+              <h4>And = .</h4>
             </div>
             <Card bordered={false}>
               <Table

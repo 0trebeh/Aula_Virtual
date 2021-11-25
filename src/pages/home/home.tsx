@@ -13,7 +13,9 @@ import {
   SearchOutlined,
   UsergroupAddOutlined,
   ToolOutlined,
-  SolutionOutlined
+  SolutionOutlined,
+  ApiOutlined,
+  CalculatorOutlined
 } from '@ant-design/icons';
 
 import Header from "../../components/header";
@@ -33,6 +35,7 @@ const Home = () => {
   const [RegisterComplete, setRegisterComplete] = useState(true);
   const [Teacher, setTeacher] = useState(false);
   const [TooltipVisible, setTooltipVisible] = useState(true);
+  const [Visible, setVisible] = useState(false);
   const [Section, setSection] = useState('false');
   const [FormSeccion, setFormSeccion] = useState(false);
   const [SearchSeccion, setSearchSeccion] = useState(false);
@@ -97,6 +100,7 @@ const Home = () => {
   const onCancel = () => {
     setFormSeccion(false);
     setSearchSeccion(false);
+    setVisible(false);
     setTooltipVisible(true);
   }
 
@@ -170,7 +174,7 @@ const Home = () => {
                   <BookOutlined className="icon-botton-home"/>
                 </Card>
                 <Card 
-                  onClick={()=>{history.push('laboratory');}}
+                  onClick={()=>{setVisible(true); setTooltipVisible(false);}}
                   bordered={false} 
                   className="card-body-homeStyle card-laboratory" 
                   bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
@@ -336,6 +340,33 @@ const Home = () => {
             </Button>
           </Form.Item>
         </Form>
+      </Modal>
+
+      <Modal title={"Herramientas de laboratorio"} visible={Visible}
+        onCancel={onCancel}
+        footer={null}
+      >
+        <div style={{textAlign:"center"}}>
+          <div style={{margin: 10}}>
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            onClick={() => history.push('laboratory')}
+            style={{backgroundColor:"#f5222d", borderColor:"#96030b"}}
+          >
+            Generador de tablas de verdad <CalculatorOutlined style={{marginLeft:5}}/>
+          </Button>
+          </div>
+          <a href="https://simuladorcircuitoslogicos.000webhostapp.com/">
+            <Button 
+              type="primary" 
+              htmlType="submit" 
+              style={{backgroundColor:"#ff9400", borderColor:"#af6600"}}
+            >
+              Simulador de circuitos logicos <ApiOutlined style={{marginLeft:5}}/>
+            </Button>
+          </a> 
+        </div>
       </Modal>
     </>
   );

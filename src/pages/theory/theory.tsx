@@ -6,7 +6,7 @@ import { Image, Tooltip, Card, Modal, Button} from 'antd';
 import './theory.css';
 
 import Header from "../../components/header";
-
+ 
 import { 
   ApiOutlined,
   TableOutlined,
@@ -49,7 +49,8 @@ const Theory = () => {
               <Card 
                 onClick={()=>{
                   setVisible(!Visible);
-                  setTitle("Circuitos logicos");
+                  setTitle("Circuitos lógicos");
+                  localStorage.setItem("next", JSON.stringify("Circuitos logicos"));
                 }}
                 bordered={false} 
                 className="card-body-theoryStyle card-circuitos"
@@ -62,6 +63,7 @@ const Theory = () => {
                 onClick={()=>{
                   if(Progress >= 1){
                     setVisible(!Visible);
+                    localStorage.setItem("next", JSON.stringify("Sistema binarios"));
                     setTitle("Sistema binarios");
                   }
                 }}
@@ -84,6 +86,7 @@ const Theory = () => {
                   if(Progress >= 2){
                     setVisible(!Visible);
                     setTitle("Algebra booleana");
+                    localStorage.setItem("next", JSON.stringify("Algebra booleana"));
                   }
                 }}
                 bordered={false} 
@@ -102,6 +105,7 @@ const Theory = () => {
                   if(Progress >= 3){
                     setVisible(!Visible);
                     setTitle("Tablas de verdad");
+                    localStorage.setItem("next", JSON.stringify("Tablas de verdad"));
                   }
                 }}
                 bordered={false} 
@@ -120,7 +124,8 @@ const Theory = () => {
                 onClick={()=>{
                   if(Progress >= 4){
                     setVisible(!Visible);
-                    setTitle("Compuertas logicas");
+                    setTitle("Compuertas lógicas");
+                    localStorage.setItem("next", JSON.stringify("Compuertas logicas"));
                   }
                 }}
                 bordered={false} 
@@ -156,10 +161,7 @@ const Theory = () => {
           <Button 
             type="primary" 
             htmlType="submit" 
-            onClick={() => history.push({
-              pathname: '/theory/definition',
-              state: { detail: Title }
-            })}
+            onClick={() => history.push('/theory/definition')}
             style={{backgroundColor:"#f5222d", borderColor:"#96030b"}}
           >
             Apuntes <EditOutlined style={{marginLeft:5}}/>
@@ -168,10 +170,7 @@ const Theory = () => {
           <Button 
             type="primary" 
             htmlType="submit" 
-            onClick={() => history.push({
-              pathname: '/theory/exercise',
-              state: { detail: Title }
-            })}
+            onClick={() => history.push('/theory/exercise')}
             style={{backgroundColor:"#ff9400", borderColor:"#af6600"}}
           >
             Examen <KeyOutlined style={{marginLeft:5}}/>

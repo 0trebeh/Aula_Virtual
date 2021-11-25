@@ -10,11 +10,30 @@ import TablasDeVerdad from "./definition/tablasDeVerdad";
 import CompuertasLogicas from "./definition/compuertasLogicas";
 
 import { 
-    DoubleRightOutlined
+    DoubleRightOutlined,
+    DoubleLeftOutlined
   } from '@ant-design/icons';
 
-const Definition = (props : any) => {
+const Definition = () => {
     const history = useHistory();
+    const next = JSON.parse(localStorage.getItem("next") || "{Circuitos logicos}");
+
+    const backPage = async() => {
+        if(next === "Circuitos logicos"){
+            await history.push('/theory');
+        } else {
+            if(next === "Sistema binarios"){
+                await localStorage.setItem("next", JSON.stringify("Circuitos logicos"));
+            } else if(next === "Algebra booleana"){
+                await localStorage.setItem("next", JSON.stringify("Sistema binarios"));
+            } else if(next === "Tablas de verdad"){
+                await localStorage.setItem("next", JSON.stringify("Algebra booleana"));
+            }else if(next === "Compuertas logicas"){
+                await localStorage.setItem("next", JSON.stringify("Tablas de verdad"));
+            }
+            history.push('/theory/exercise');
+        }
+    }
 
     return (
         <>
@@ -24,15 +43,15 @@ const Definition = (props : any) => {
                 active_iconHome={true}
             />
 
-            {   props.location.state.detail === "Circuitos logicos" ?
+            {   next === "Circuitos logicos" ?
                 <CircuitosLogicos/>:
-                props.location.state.detail === "Sistema binarios" ?
+                next === "Sistema binarios" ?
                 <SistemaBinarios/>:
-                props.location.state.detail === "Algebra booleana" ?
+                next === "Algebra booleana" ?
                 <AlgebraBooleana/>:
-                props.location.state.detail === "Tablas de verdad" ?
+                next === "Tablas de verdad" ?
                 <TablasDeVerdad/>:
-                props.location.state.detail === "Compuertas logicas" ?
+                next === "Compuertas logicas" ?
                 <CompuertasLogicas/>:
                 null
             }
@@ -41,13 +60,19 @@ const Definition = (props : any) => {
                 marginTop: 10,
                 marginLeft: 40, 
             }}>
+
                 <Button 
                     type="primary" 
                     htmlType="submit" 
-                    onClick={() => history.push({
-                        pathname: '/theory/exercise',
-                        state: { detail: props.location.state.detail }
-                    })}
+                    onClick={() => backPage()}
+                    style={{backgroundColor:"#ff9400", borderColor:"#af6600",  marginRight:30}}
+                >
+                    <DoubleLeftOutlined style={{marginRight:5}}/> Volver 
+                </Button>
+                <Button 
+                    type="primary" 
+                    htmlType="submit" 
+                    onClick={() => history.push('/theory/exercise')}
                     style={{backgroundColor:"#ff9400", borderColor:"#af6600"}}
                 >
                     Siguiente <DoubleRightOutlined style={{marginLeft:5}}/>

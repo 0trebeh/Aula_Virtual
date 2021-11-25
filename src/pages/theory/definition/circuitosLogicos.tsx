@@ -10,7 +10,7 @@ const CircuitosLogicos = (props : any) => {
     
     var circuitos_1 = 'Son circuitos encargados de procesar las señales binarias (información digital). Es decir, reciben la información en forma binaria, con valores de "1" y "0".  y devuelve una salida dependiendo del proceso que se ejecute. ';
     var circuitos_2 = 'El proceso que se ejecuta utiliza como herramienta álgebra booleana que maneja valores de "1" y "0" para el análisis y diseño de sistemas digitales, como teléfonos y computadoras. ';
-    var circuitos_3 = 'Los Circuitos Lógicos están compuestos por elementos digitales como la compuerta AND (Y), compuerta OR (O), compuerta NOT (NO) y combinaciones de estos mismos. que veremos a continuación. ';
+    var circuitos_3 = 'Los Circuitos Lógicos están compuestos por elementos digitales como la compuerta AND (Y), compuerta OR (O), compuerta NOT (NO). que veremos en una siguiente sección, y combinaciones de estos mismos. ';
     
     return (
         <div>

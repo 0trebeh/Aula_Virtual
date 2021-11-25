@@ -10,14 +10,12 @@ import {UploadOutlined} from '@ant-design/icons';
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
-//import "./task.css";
-
 const Chat = () => {   
 
   // [Message, setMessage] = useState([]);
   const [Loading, setLoading] = useState(true);
-  var section = JSON.parse(localStorage.getItem("userData") || "{}").section;
-  const User = JSON.parse(localStorage.getItem("userData") || "{}");
+  /*var section = JSON.parse(localStorage.getItem("userData") || "{section: 'Prueba'}").section;  
+  const User = JSON.parse(localStorage.getItem("userData") || "{name: 'default'}");*/
 
   var data = [
     {
@@ -39,7 +37,7 @@ const Chat = () => {
           }
       }).catch((error) => {
           console.log("Error getting document:", error);
-      }); */
+      }); 
       const doc = await fs.collection(section).get().then(snapshot => {
 
 
@@ -49,7 +47,7 @@ const Chat = () => {
       
         });
       
-      });
+      });*/
 
     }
     getData();
@@ -58,10 +56,10 @@ const Chat = () => {
   }, []);
 
   const onFinish = async (values: any) => {
-    var message = {title: User.name, description: values.message};
+    /*var message = {title: User.name, description: values.message};
     data.push(message);
     console.log(message);
-    const doc = await fs.collection(section).doc(Date.now().toString()).set(message);
+    const doc = await fs.collection(section).doc(Date.now().toString()).set(message);*/
   };
 
   /*const normFile = (e: any) => {
