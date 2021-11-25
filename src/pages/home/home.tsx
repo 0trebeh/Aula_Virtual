@@ -67,23 +67,16 @@ const Home = () => {
     var { name, lastname, teacher} = values;
     var m = new Date().getMonth();
     var y = new Date().getFullYear();
-    if(teacher === undefined){
-      data = {
-        name, 
-        lastname, 
-        teacher: false, 
-        section: 'false', 
-        m: m.toString(), 
-        y: y.toString(),};
-    } else {
-      data = {
-        name, 
-        lastname, 
-        teacher: true, 
-        section: 'false', 
-        m: m.toString(), 
-        y: y.toString(),};
-    }
+
+    data = {
+      name, 
+      lastname, 
+      teacher: Teacher, 
+      section: 'false', 
+      m: m.toString(), 
+      y: y.toString(),
+    };
+
     console.log(data);
     const doc = await fs.collection("userData").doc(id).set(data);
 
