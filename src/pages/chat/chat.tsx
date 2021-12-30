@@ -4,36 +4,21 @@ import {fs} from '../../firebase';
 import chat_robot from '../../img/chat_robot.png';
 import profile_robot from '../../img/profile-face.png';
 
-import { List, Avatar, Affix, Image, Tooltip, Form, Input, Button, Upload } from 'antd';
-import {UploadOutlined} from '@ant-design/icons';
+import { List, Avatar, Affix, Image, Tooltip, Input, Button } from 'antd';
 
 import Header from "../../components/header";
-import Footer from "../../components/footer";
 
 const Chat = () => {   
 
   const [Message, setMessage] = useState("");
   const [Loading, setLoading] = useState(true);
+  const [Get, setGet] = useState(true);
   var section = JSON.parse(localStorage.getItem("userData") || "{'section': 'Prueba'}").section;  
   const User = JSON.parse(localStorage.getItem("userData") || "{'name': 'default'}");
-
   const [data, setdata] = useState([{title: '...', description: "... ...", date: "../../../", time: ".."},]);
 
   useEffect(() => {
     const getData = async () => {
-      var docRef = fs.collection("Prueba").doc("message");
-
-      /*docRef.get().then((doc: any) => {
-          if (doc.exists) {
-              console.log("Document data:", doc.data(), "fin");
-              //setdata();
-          } else {
-              // doc.data() will be undefined in this case
-              console.log("No such document!");
-          }
-      }).catch((error: any) => {
-          console.log("Error getting document:", error);
-      }); */
 
       const doc = await fs.collection(section).get().then(snapshot => {
         
@@ -59,20 +44,24 @@ const Chat = () => {
     getData();
 
     setLoading(false);
-  }, []);
+  }, [Get]);
 
   const onFinish = async () => {
-    
-    var nowId = Date.now();
-    var now = new Date(nowId);
-    var date = now.getDate() + '/' + ( now.getMonth() + 1 ) + '/' + now.getFullYear();
-    var time = now.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    if(Message === ""){
+      //nada
+    } else {
+      var nowId = Date.now();
+      var now = new Date(nowId);
+      var date = now.getDate() + '/' + ( now.getMonth() + 1 ) + '/' + now.getFullYear();
+      var time = now.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
-    var message = {title: User.name, description: Message, time, date };
-    data.push(message);
-    
+      var message = {title: User.name, description: Message, time, date };
+      data.push(message);
+
+      const doc = await fs.collection(section).doc(nowId.toString()).set(message);
+    }
     setMessage("");
-    const doc = await fs.collection(section).doc(nowId.toString()).set(message);
+    setGet(!Get);
   };
 
   const onChangeMessage = async (e: any) => {
@@ -100,8 +89,13 @@ const Chat = () => {
         active_iconHome={true}
       />
       <div style={{display:"flex", justifyContent:"space-between",}}>
-        <div style={{width:"60%", backgroundColor: "#1B4F72", minHeight: "calc(100vh - 104px)",}}>
-          <div style={{width:"100%", minHeight: "calc(100% - 49px)"}}>
+        <div style={{width:"60%", backgroundColor: "#1B4F72",}}>
+          <div style={{
+            height: "calc(100vh - 104px)",
+            overflow: 'auto',
+            padding: '0 16px',
+            border: '1px solid rgba(140, 140, 140, 0.35)',
+          }}>
             <List
               itemLayout="horizontal"
               dataSource={data}
@@ -124,7 +118,7 @@ const Chat = () => {
             />
           </div>
 
-          <div style={{width:"100%", backgroundColor:"#1D4368", paddingTop:5,  }}>
+          <div style={{width:"100%", backgroundColor:"#1D4368", paddingTop:5, paddingBottom:5 }}>
             <div style={{ marginLeft: 10, display:"flex", width:"95%",}}>
               <Input 
                   placeholder="Escribe tu mensaje" 
@@ -171,7 +165,6 @@ const Chat = () => {
           </div>
         </Affix>
       </div>
-      <Footer/>
     </div>
   );
 }

@@ -39,7 +39,9 @@ const Home = () => {
   const [Section, setSection] = useState('false');
   const [FormSeccion, setFormSeccion] = useState(false);
   const [SearchSeccion, setSearchSeccion] = useState(false);
-  const IsTeacher = JSON.parse(localStorage.getItem("userData") || "{}").teacher;
+  const [Effect, setEffect] = useState(false);
+  const User = JSON.parse(localStorage.getItem("userData") || "{}");
+  const IsTeacher = User.teacher;
   const id = JSON.parse(localStorage.getItem("data") || "{}").email;
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const Home = () => {
     }
     getData();
     console.log(RegisterComplete)
-  }, []);
+  }, [Effect]);
 
   const teacher = () => {
     setTeacher(!Teacher);
@@ -84,6 +86,7 @@ const Home = () => {
 
     if(doc === undefined){
       setRegisterComplete(!RegisterComplete);
+      setEffect(!Effect);
     }
   }; 
 
@@ -114,12 +117,18 @@ const Home = () => {
         var setUpdate = update.set({
           section: values.name
         }, { merge: true });
+
+        var val = {
+          name: values.name,
+          school: values.school,
+          list: []          
+        };
   
-        const create = await fs.collection(values.name).doc(values.name).set(values);
+        const create = await fs.collection(values.name).doc(values.name).set(val);
         
         setSection(values.name);
   
-        history.push('profile');
+        setEffect(!Effect);
       }
     }
   }
@@ -130,7 +139,6 @@ const Home = () => {
   }
 
   const joinSeccion = async (values: any) => {
-    console.log(values);
 
     const doc = await fs.collection(values.name).doc(values.name).get();
     console.log(doc.exists);
@@ -141,7 +149,17 @@ const Home = () => {
         section: values.name
       }, { merge: true });
 
-      history.push('profile');
+      var list = doc.data() || [];
+      var listUsers = list.list.concat([{id, Grades: 0, ...User}]);
+      console.log(listUsers);
+
+      var up = fs.collection(values.name).doc(values.name);
+      var setUp = up.set({
+        list: listUsers
+      }, { merge: true });
+
+      setEffect(!Effect);
+      message.success("Te has unido exitosamente a la seccion "+values.name);
     } else {
       message.error("No existe una seccion llamada " + values.name);
     }
@@ -174,15 +192,17 @@ const Home = () => {
                   <h2 className="text-botton">Teoria</h2>
                   <BookOutlined className="icon-botton-home"/>
                 </Card>
-                <Card 
-                  onClick={()=>{setVisible(true); setTooltipVisible(false);}}
-                  bordered={false} 
-                  className="card-body-homeStyle card-laboratory" 
-                  bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
-                >
-                  <h2 className="text-botton">Laboratorio</h2>
-                  <ToolOutlined className="icon-botton-home"/>
-                </Card>
+                <a href="https://simuladorcircuitoslogicos.000webhostapp.com/">
+                  <Card 
+                    //onClick={()=>{setVisible(true); setTooltipVisible(false);}}
+                    bordered={false} 
+                    className="card-body-homeStyle card-laboratory" 
+                    bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
+                  >
+                    <h2 className="text-botton">Laboratorio</h2>
+                    <ToolOutlined className="icon-botton-home"/>
+                  </Card>
+                </a>
               </div>
               { Section !== 'false' ?
               <div className="card-body-home">
@@ -197,17 +217,17 @@ const Home = () => {
                 </Card>
                 { !IsTeacher ?
                   <Card 
-                    onClick={()=>{history.push('ratings');}}
+                    onClick={()=>{history.push('listUsers');}}
                     bordered={false} 
                     className="card-body-homeStyle card-stats" 
                     bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
                   >
-                    <h2 className="text-botton">Estadisticas</h2>
-                    <FundViewOutlined className="icon-botton-home"/>
+                    <h2 className="text-botton">Compañeros</h2>
+                    <SolutionOutlined className="icon-botton-home"/>
                   </Card>
                   :
                   <Card 
-                    onClick={()=>{history.push('ratings');}}
+                    onClick={()=>{history.push('listUsers');}}
                     bordered={false} 
                     className="card-body-homeStyle card-stats" 
                     bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
@@ -342,7 +362,7 @@ const Home = () => {
           </Form.Item>
         </Form>
       </Modal>
-
+{/*
       <Modal title={"Herramientas de laboratorio"} visible={Visible}
         onCancel={onCancel}
         footer={null}
@@ -368,7 +388,8 @@ const Home = () => {
             </Button>
           </a> 
         </div>
-      </Modal>
+        </Modal>
+*/}
     </>
   );
 }

@@ -98,7 +98,7 @@ const Login = (props: Props) => {
           <GoogleOutlined /> Entrar con google
         </Button>
       </Modal>
-    );
+    ); 
 }
 
 export default Login;

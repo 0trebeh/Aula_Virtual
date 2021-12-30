@@ -14,10 +14,8 @@ import Definition from './pages/theory/definition';
 import Exercise from './pages/theory/exercise';
 import Laboratory from './pages/laboratory/laboratory';
 import Chat from './pages/chat/chat';
-import Ratings from './pages/ratings/ratings';
+import ListUsers from './pages/listUsers/listUsers';
 import Profile from './pages/profile/profile';
-import Delivers from './pages/delivers/delivers';
-import Diagram from './pages/diagram/diagram';
 import Celebration from './components/celebration';
 import NotFound from './components/notFound';
 
@@ -38,15 +36,13 @@ function App() {
         <Switch>
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/home' component={Home} />
-          <Route exact path='/diagram' component={Diagram} />
           <Route exact path='/theory' component={Theory} />
           <Route exact path='/theory/definition' component={Definition} />
           <Route exact path='/theory/exercise' component={Exercise} />
           <Route exact path='/laboratory' component={Laboratory} />
           <Route exact path='/chat' component={Chat} />
-          <Route exact path='/ratings' component={Ratings} />
+          <Route exact path='/listUsers' component={ListUsers} />
           <Route exact path='/profile' component={Profile} />
-          <Route exact path='/delivers' component={Delivers} />
           <Route exact path='/fest' component={Celebration} />
           <Route component={NotFound} />
         </Switch>
