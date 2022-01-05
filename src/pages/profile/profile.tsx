@@ -10,7 +10,8 @@ import {
   ClockCircleOutlined, 
   FormOutlined,
   UserOutlined,
-  MailOutlined
+  MailOutlined,
+  RocketOutlined
 } from '@ant-design/icons';
 
 import Header from "../../components/header";
@@ -139,18 +140,22 @@ const Profile = () => {
                     <ClockCircleOutlined style={{marginRight: 7, color: "blueviolet"}}/>
                     <h4>
                       Se registro el mes {User.m} de {User.y}
-                      </h4>
+                    </h4>
                   </div>
                   <div style={{display: "flex", justifyContent: "flex-start",}}>
                     <MailOutlined style={{marginRight: 7, color: "red"}}/>
                     <h4>{id}</h4>
+                  </div>
+                  <div style={{display: "flex", justifyContent: "flex-start",}}>
+                  <RocketOutlined style={{ fontSize: '20px', marginRight: 7, color: "#ff9400"}}/>
+                    <h4>Nivel {User.Progress + 1}</h4>
                   </div>
                 </div>
               </div>
               <Button type="primary" onClick={() => setVisible(!Visible)} > Editar Perfil <FormOutlined /></Button>
             </div>
           </Card>
-          <Card bodyStyle={{width:"60%", marginLeft:20,}}>
+          <Card bodyStyle={{width:"60%", marginLeft:20, paddingTop: 15}}>
             <h3>Sesion:</h3> 
             <Button style={{backgroundColor: "#ff9400", marginLeft:180}} type="primary" onClick={signOut}> Cerrar Sesion</Button>
           </Card>
@@ -158,7 +163,7 @@ const Profile = () => {
           ?
           <></>
           :
-          <Card bodyStyle={{width:"60%", marginLeft:20, marginTop: 40}}>
+          <Card bodyStyle={{width:"60%", marginLeft:20, marginTop: 30}}>
             Seccion: "{Section}" 
             <div style={{ width: 70, marginLeft: 180 }}>
               <Popconfirm
@@ -173,7 +178,7 @@ const Profile = () => {
               </div>
           </Card>
           }
-          <Card bodyStyle={{width:"60%", marginLeft:20, marginTop: 10}}>
+          <Card bodyStyle={{width:"60%", marginLeft:20,}}>
             Cuenta: 
             <div style={{ width: 70, marginLeft:180}}>
               <Popconfirm

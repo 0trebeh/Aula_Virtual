@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
+import {fs} from '../../firebase';
 import theory_robot from '../../img/theory - robot.png';
 import { Image, Tooltip, Card, Modal, Button} from 'antd';
 
@@ -18,6 +19,8 @@ import {
 } from '@ant-design/icons';
 
 const Theory = () => {
+  const User = JSON.parse(localStorage.getItem("userData") || "{}");
+  const id = JSON.parse(localStorage.getItem("data") || "{}").email;
   const history = useHistory();
   const [Visible, setVisible] = useState(false);
   const [Title, setTitle] = useState("");
@@ -27,6 +30,19 @@ const Theory = () => {
   const handleCancel = () => {
     setVisible(!Visible);
   };
+
+  useEffect(() => {
+    if(User.teacher == false){
+      //obtiene los datos del usuario
+      const getData = async () => {
+        const doc = await fs.collection("userData").doc(id).get();
+        console.log(doc.data());
+        var progress = JSON.parse(localStorage.getItem("userData") || "{}");
+        setProgress(progress.Progress);
+      }
+      getData();
+    } 
+  }, []);
 
   return (
     <>

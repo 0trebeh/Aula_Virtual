@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
-import { Modal, Button  } from 'antd';
-
-import Celebration from "../../components/celebration";
+import { Button  } from 'antd';
 
 import Header from "../../components/header";
 import CircuitosLogicos from "./exercise/circuitosLogicos";
@@ -18,17 +16,11 @@ import {
 
 const Exercise = () => {
     const history = useHistory();
-    const [Visible, setVisible] = useState(false);
     const next = JSON.parse(localStorage.getItem("next") || "{Circuitos logicos}");
-    
-    const handleCancel = () => {
-        setVisible(!Visible);
-        history.push('/theory');
-    }; 
 
-    const nextPage = async () => {
+    /*const nextPage = async () => {
         if(next === "Compuertas logicas"){
-            setVisible(!Visible);
+            //
         } else {
             if(next === "Circuitos logicos"){
                 await localStorage.setItem("next", JSON.stringify("Sistema binarios"));
@@ -42,7 +34,7 @@ const Exercise = () => {
             history.push('/theory/definition');
         }
         
-    }
+    }*/
 
     return (
         <>
@@ -80,20 +72,12 @@ const Exercise = () => {
                 <Button 
                     type="primary" 
                     htmlType="submit" 
-                    onClick={() => nextPage()}
+                    /*onClick={() => nextPage()}*/
                     style={{backgroundColor:"#ff9400", borderColor:"#af6600"}}
                 >
                     Siguiente <DoubleRightOutlined style={{marginLeft:5}}/>
                 </Button>       
             </div>
-
-            <Modal visible={Visible}
-                onCancel={handleCancel}
-                footer={null}
-                style={{width: "100%", padding: 0}}
-            >
-                <Celebration/>
-            </Modal>
         </>
     );
 }

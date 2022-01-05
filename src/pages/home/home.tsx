@@ -75,6 +75,7 @@ const Home = () => {
       lastname, 
       teacher: Teacher, 
       section: 'false', 
+      Progress: 0,
       m: m.toString(), 
       y: y.toString(),
     };

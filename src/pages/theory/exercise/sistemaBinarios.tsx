@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Card, Image, Button, Radio, Form, Input } from 'antd';
+import { Card, Image, Button, Radio, Form, message } from 'antd';
 import robot from '../../../img/robot-opcion.png';
+import {fs} from '../../../firebase';
 import { 
     DoubleRightOutlined
 } from '@ant-design/icons';
@@ -14,10 +15,41 @@ const layout = {
 
 const SistemaBinarios = (props : any) => {
 
+    const User = JSON.parse(localStorage.getItem("userData") || "{}");
+    const id = JSON.parse(localStorage.getItem("data") || "{}").email;
     const [Data, setData] = useState(false);
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log(values);
+
+        var count = 0;
+
+        if(values.pregunta1 == 'c'){
+            count ++;
+        }
+        if(values.pregunta2 == 'b'){
+            count ++;
+        }
+        console.log(count);
+
+        if(count == 0){
+            message.error("Ohh no, no respondiste correctamente :(");
+        }
+
+        if(count >= 1){
+            message.success("Felicidades, Has desbloqueado la siguiente parte");
+            var {name, lastname, teacher, section, m, y, Progress} = User;
+            var data = {
+                name, 
+                lastname, 
+                teacher, 
+                section, 
+                m, 
+                y,
+                Progress: Progress + 1
+            }
+            const doc = await fs.collection("userData").doc(id).set(data);
+        }
     }; 
 
     var parrafo_1 = 'Se dice que el sismeta binario es de base 2 por?: ';
