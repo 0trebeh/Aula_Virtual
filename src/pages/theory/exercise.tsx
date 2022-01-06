@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
 import { Button  } from 'antd';
 
@@ -10,31 +10,13 @@ import TablasDeVerdad from "./exercise/tablasDeVerdad";
 import CompuertasLogicas from "./exercise/compuertasLogicas";
 
 import { 
-    DoubleRightOutlined,
+    MenuFoldOutlined,
     DoubleLeftOutlined
 } from '@ant-design/icons';
 
 const Exercise = () => {
     const history = useHistory();
     const next = JSON.parse(localStorage.getItem("next") || "{Circuitos logicos}");
-
-    /*const nextPage = async () => {
-        if(next === "Compuertas logicas"){
-            //
-        } else {
-            if(next === "Circuitos logicos"){
-                await localStorage.setItem("next", JSON.stringify("Sistema binarios"));
-            } else if(next === "Sistema binarios"){
-                await localStorage.setItem("next", JSON.stringify("Algebra booleana"));
-            } else if(next === "Algebra booleana"){
-                await localStorage.setItem("next", JSON.stringify("Tablas de verdad"));
-            } else if(next === "Tablas de verdad"){
-                await localStorage.setItem("next", JSON.stringify("Compuertas logicas"));
-            }
-            history.push('/theory/definition');
-        }
-        
-    }*/
 
     return (
         <>
@@ -67,15 +49,15 @@ const Exercise = () => {
                     onClick={() => history.push('/theory/definition')}
                     style={{backgroundColor:"#ff9400", borderColor:"#af6600",  marginRight:30}}
                 >
-                    <DoubleLeftOutlined style={{marginRight:5}}/> Volver 
+                    <DoubleLeftOutlined style={{marginRight:5}}/> Volver
                 </Button>
                 <Button 
                     type="primary" 
                     htmlType="submit" 
-                    /*onClick={() => nextPage()}*/
+                    onClick={() => history.push('/theory/')}
                     style={{backgroundColor:"#ff9400", borderColor:"#af6600"}}
                 >
-                    Siguiente <DoubleRightOutlined style={{marginLeft:5}}/>
+                    Ir a menú <MenuFoldOutlined style={{marginLeft:5}}/>
                 </Button>       
             </div>
         </>

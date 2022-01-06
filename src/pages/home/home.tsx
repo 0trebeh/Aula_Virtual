@@ -8,7 +8,6 @@ import {  Image, Tooltip, Card, Form, Input, Button, Switch, Modal, message } fr
 import { 
   UserOutlined, 
   MailOutlined,
-  FundViewOutlined,
   BookOutlined,
   SearchOutlined,
   UsergroupAddOutlined,
@@ -44,7 +43,7 @@ const Home = () => {
   const IsTeacher = User.teacher;
   const id = JSON.parse(localStorage.getItem("data") || "{}").email;
 
-  useEffect(() => {
+  useEffect(() => { 
     //obtiene los datos del usuario
     const getData = async () => {
       const doc = await fs.collection("userData").doc(id).get();
@@ -193,17 +192,15 @@ const Home = () => {
                   <h2 className="text-botton">Teoria</h2>
                   <BookOutlined className="icon-botton-home"/>
                 </Card>
-                <a href="https://simuladorcircuitoslogicos.000webhostapp.com/">
                   <Card 
-                    //onClick={()=>{setVisible(true); setTooltipVisible(false);}}
+                    onClick={()=>{setVisible(true); setTooltipVisible(false);}}
                     bordered={false} 
                     className="card-body-homeStyle card-laboratory" 
                     bodyStyle={{justifyContent: "space-between", display: "flex", alignItems: "center", paddingRight: 5,}}
                   >
                     <h2 className="text-botton">Laboratorio</h2>
                     <ToolOutlined className="icon-botton-home"/>
-                  </Card>
-                </a>
+                  </Card> 
               </div>
               { Section !== 'false' ?
               <div className="card-body-home">
@@ -266,7 +263,7 @@ const Home = () => {
             </div>
             <div className="robot-home">
               <Tooltip placement="leftTop" color="#1890ff" 
-                title={ !RegisterComplete ? text_message_robot : text_message_robot_seccion} 
+                title={ Section !== 'false' ? text_message_robot : text_message_robot_seccion} 
                 visible={RegisterComplete && TooltipVisible}
               >
                 <Image
@@ -363,7 +360,7 @@ const Home = () => {
           </Form.Item>
         </Form>
       </Modal>
-{/*
+
       <Modal title={"Herramientas de laboratorio"} visible={Visible}
         onCancel={onCancel}
         footer={null}
@@ -390,7 +387,6 @@ const Home = () => {
           </a> 
         </div>
         </Modal>
-*/}
     </>
   );
 }

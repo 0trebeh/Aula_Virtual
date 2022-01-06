@@ -22,7 +22,6 @@ const AlgebraBooleana = (props : any) => {
     const history = useHistory();
     const User = JSON.parse(localStorage.getItem("userData") || "{}");
     const id = JSON.parse(localStorage.getItem("data") || "{}").email;
-    const [Data, setData] = useState(false);
     const [Visible, setVisible] = useState(false);
 
     const handleCancel = () => {
@@ -35,31 +34,33 @@ const AlgebraBooleana = (props : any) => {
 
         var count = 0;
 
-        if(values.pregunta1 == 'a'){
+        if(values.pregunta1 === 'a'){
             count ++;
         }
-        if(values.pregunta2 == 'a'){
+        if(values.pregunta2 === 'a'){
             count ++;
         }
         console.log(count);
 
-        if(count == 0){
+        if(count <= 1){
             message.error("Ohh no, no respondiste correctamente :(");
         }
 
-        if(count >= 1){
+        if(count >= 2){
             message.success("Felicidades, Has desbloqueado la siguiente parte");
             var {name, lastname, teacher, section, m, y, Progress} = User;
-            var data = {
-                name, 
-                lastname, 
-                teacher, 
-                section, 
-                m, 
-                y,
-                Progress: Progress + 1
+            if(Progress <= 2){
+                var data = {
+                    name, 
+                    lastname, 
+                    teacher, 
+                    section, 
+                    m, 
+                    y,
+                    Progress: Progress + 1
+                }
+                const doc = await fs.collection("userData").doc(id).set(data);
             }
-            const doc = await fs.collection("userData").doc(id).set(data);
             setVisible(!Visible);
         }
     }; 
@@ -116,14 +117,15 @@ const AlgebraBooleana = (props : any) => {
                         src={robot}
                     />
                 </Card>
+                <Modal visible={Visible}
+                    onCancel={handleCancel}
+                    footer={null}
+                    style={{width: "100%", padding: 0}}
+                >
+                    <Celebration/>
+                </Modal>
             </div>
-            <Modal visible={Visible}
-                onCancel={handleCancel}
-                footer={null}
-                style={{width: "100%", padding: 0}}
-            >
-                <Celebration/>
-            </Modal>
+            
         </div>
     );
     

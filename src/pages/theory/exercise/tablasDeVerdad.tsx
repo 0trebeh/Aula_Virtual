@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Card, Image, Button, Radio, Form, message } from 'antd';
+import {useHistory} from 'react-router-dom';
+import { Card, Image, Button, Radio, Form, message, Modal} from 'antd';
 import robot from '../../../img/robot-opcion.png';
 import {fs} from '../../../firebase';
 import { 
     DoubleRightOutlined
 } from '@ant-design/icons';
+
+import Celebration from "../../../components/celebration";
 
 import '../theory.css';
 
@@ -15,40 +18,49 @@ const layout = {
 
 const TablasDeVerdad = (props : any) => {
 
+    const history = useHistory();
     const User = JSON.parse(localStorage.getItem("userData") || "{}");
     const id = JSON.parse(localStorage.getItem("data") || "{}").email;
-    const [Data, setData] = useState(false);
+    const [Visible, setVisible] = useState(false);
+
+    const handleCancel = () => {
+        setVisible(!Visible);
+        history.push('/theory');
+    }; 
 
     const onFinish = async (values: any) => {
         console.log(values);
 
         var count = 0;
 
-        if(values.pregunta1 == 'b'){
+        if(values.pregunta1 === 'b'){
             count ++;
         }
-        if(values.pregunta2 == 'a'){
+        if(values.pregunta2 === 'a'){
             count ++;
         }
         console.log(count);
 
-        if(count == 0){
+        if(count <= 1){
             message.error("Ohh no, no respondiste correctamente :(");
         }
 
-        if(count >= 1){
+        if(count >= 2){
             message.success("Felicidades, Has desbloqueado la siguiente parte");
             var {name, lastname, teacher, section, m, y, Progress} = User;
-            var data = {
-                name, 
-                lastname, 
-                teacher, 
-                section, 
-                m, 
-                y,
-                Progress: Progress + 1
+            if(Progress <= 3){
+                var data = {
+                    name, 
+                    lastname, 
+                    teacher, 
+                    section, 
+                    m, 
+                    y,
+                    Progress: Progress + 1
+                }
+                const doc = await fs.collection("userData").doc(id).set(data);
             }
-            const doc = await fs.collection("userData").doc(id).set(data);
+            setVisible(!Visible);
         }
     }; 
 
@@ -103,6 +115,13 @@ const TablasDeVerdad = (props : any) => {
                         src={robot}
                     />
                 </Card>
+                <Modal visible={Visible}
+                    onCancel={handleCancel}
+                    footer={null}
+                    style={{width: "100%", padding: 0}}
+                >
+                    <Celebration/>
+                </Modal>
             </div>
         </div>
     );

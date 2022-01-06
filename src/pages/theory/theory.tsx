@@ -32,8 +32,8 @@ const Theory = () => {
   };
 
   useEffect(() => {
-    if(User.teacher == false){
-      //obtiene los datos del usuario
+    if(User.teacher === false){
+      //refresca los datos del
       const getData = async () => {
         const doc = await fs.collection("userData").doc(id).get();
         console.log(doc.data());
