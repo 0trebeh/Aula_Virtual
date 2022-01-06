@@ -4,8 +4,9 @@ import {auth} from '../../firebase';
 import {fs} from '../../firebase';
 
 import profile_robot from '../../img/profile-face.png';
+import profile from '../../img/profile.png';
 
-import {  Image, Card, Form, Input, Button, Modal, Popconfirm, message} from 'antd';
+import {  Image, Card, Form, Input, Button, Modal, Popconfirm, message, Tooltip} from 'antd';
 import { 
   ClockCircleOutlined, 
   FormOutlined,
@@ -155,43 +156,58 @@ const Profile = () => {
               <Button type="primary" onClick={() => setVisible(!Visible)} > Editar Perfil <FormOutlined /></Button>
             </div>
           </Card>
-          <Card bodyStyle={{width:"60%", marginLeft:20, paddingTop: 15}}>
-            <h3>Sesion:</h3> 
-            <Button style={{backgroundColor: "#ff9400", marginLeft:180}} type="primary" onClick={signOut}> Cerrar Sesion</Button>
-          </Card>
-          {Section === "false"
-          ?
-          <></>
-          :
-          <Card bodyStyle={{width:"60%", marginLeft:20, marginTop: 30}}>
-            Seccion: "{Section}" 
-            <div style={{ width: 70, marginLeft: 180 }}>
-              <Popconfirm
-                placement="rightTop"
-                title={"Seguro que desea salir de la seccion?"}
-                onConfirm={exitSection}
-                okText="Yes"
-                cancelText="No"
+          <div style={{width: "80%", display:"flex", justifyContent:"space-between",}}>
+            <div>
+              <Card bodyStyle={{width:"60%", marginLeft:20, paddingTop: 15}}>
+                <h3>Sesion:</h3> 
+                <Button style={{backgroundColor: "#ff9400", marginLeft:180}} type="primary" onClick={signOut}> Cerrar Sesion</Button>
+              </Card>
+              {Section === "false"
+              ?
+              <></>
+              :
+              <Card bodyStyle={{width:"60%", marginLeft:20, marginTop: 30}}>
+                Seccion: "{Section}" 
+                <div style={{ width: 70, marginLeft: 180 }}>
+                  <Popconfirm
+                    placement="rightTop"
+                    title={"Seguro que desea salir de la seccion?"}
+                    onConfirm={exitSection}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button style={{backgroundColor: "#f5222d"}} type="primary"> Salir de la seccion</Button>
+                  </Popconfirm>
+                  </div>
+              </Card>
+              }
+              <Card bodyStyle={{width:"60%", marginLeft:20,}}>
+                Cuenta: 
+                <div style={{ width: 70, marginLeft:180}}>
+                  <Popconfirm
+                    placement="rightTop"
+                    title={"Seguro que desea eliminar la cuenta?. Esto es permanente!"}
+                    onConfirm={Delete}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button style={{backgroundColor: "red"}} type="primary"> Eliminar Cuenta</Button>
+                  </Popconfirm>
+                  </div>
+              </Card>
+            </div>
+            <div className="robot-home">
+              <Tooltip placement="leftTop" color="#1890ff" 
+                title={"Tus datos estan aqui!"} 
               >
-                <Button style={{backgroundColor: "#f5222d"}} type="primary"> Salir de la seccion</Button>
-              </Popconfirm>
-              </div>
-          </Card>
-          }
-          <Card bodyStyle={{width:"60%", marginLeft:20,}}>
-            Cuenta: 
-            <div style={{ width: 70, marginLeft:180}}>
-              <Popconfirm
-                placement="rightTop"
-                title={"Seguro que desea eliminar la cuenta?. Esto es permanente!"}
-                onConfirm={Delete}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button style={{backgroundColor: "red"}} type="primary"> Eliminar Cuenta</Button>
-              </Popconfirm>
-              </div>
-          </Card>
+                <Image
+                  width={200}
+                  preview={false}
+                  src={profile}
+                />
+              </Tooltip>
+            </div>
+          </div>
 
           <Modal title="Editar perfil" visible={Visible}
             footer={null}
