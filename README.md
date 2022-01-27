@@ -1,5 +1,5 @@
 # Aula_Virtual
-Aula Virtual Web de simulaciones para la introducción de conocimientos sobre circuitos lógicos a niños en etapa escolar
+Aula Virtual Web de simulaciones para adquirir conocimientos sobre circuitos lógicos
 
 # Getting Started with Create React App
 
